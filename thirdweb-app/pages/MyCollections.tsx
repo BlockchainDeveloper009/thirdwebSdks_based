@@ -2,48 +2,48 @@ import { ConnectWallet } from "@thirdweb-dev/react";
 import type { NextPage } from "next";
 import styles from "../styles/Home.module.css";
 // import{ useWeb3 } from "@3rdweb/hooks"
-// import { useWeb3 } from "@thirdweb-dev/auth";
 import { ThirdwebSDK } from "@thirdweb-dev/sdk/evm";
 import { useEffect, useState } from "react";
+import { NFT } from "@thirdweb-dev/sdk";
 const sdk = new ThirdwebSDK("mumbai");
-const Home: NextPage =  () => {
-  // const { address, chainId } = useWeb3()
-  const [hextcnt, setHexCnt] = useState("")
+  
+const MyCollections: NextPage = () => {
 
-
+  const [hextcnt, setHexCnt] = useState()
 
   async function loadContract(){
-    
     const contract = await sdk.getContract("0x8FbA827f81786b73D65652E0294F5Af70f645123");
-    const count = await contract.erc1155.totalCount();
+    //get metaData
+// Address of the wallet to get the NFTs of
+const address = 
+["0x1d44EEDa66CFdD27189373d8B6d12eF9f549F3D5", 
+"0xf821142CC270dAb63767cFAae15dC36D1b043348"];
+const nfts = await contract.erc1155.getOwned(address[1]);
+console.log(nfts)
+//setHexCnt(nfts)
 
 
-    console.log(`Total Supply:-- ${count}`);
-    setHexCnt(count.toString())
-    
   }
   useEffect(() => {
+        
     
-
     loadContract()
   
   },[hextcnt]);
-
-
+  
   return (
     <div className={styles.container}>
       <main className={styles.main}>
 
-      <h1>Krump Mint Engine</h1>
-      {hextcnt && <p>Total Supply: "{hextcnt}"</p>}
+      <h1>test app</h1>
+      {hextcnt && <p>Sales Recipient: "{hextcnt}"</p>}
       
-
       </main>
-      
+     
     </div>
   );
 };
 
-export default Home;
 
 
+export default MyCollections;
